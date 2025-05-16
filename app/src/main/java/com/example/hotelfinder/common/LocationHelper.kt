@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 //gli diamo il contesto e una funzione che prende in ingresso la posizione e restituisce uno unit
 class LocationHelper (private val context: Context, private val onLocationChanged: (Location) -> Unit) {
 
-    //abbiamo bisongo di un location managr che viene restituito dal sistema operativo, lo diamo come locationmanager perche ritorna qualsiasi manager
+    //abbiamo bisongo di un location managr che viene restituito dal sistema operativo, lo diamo come locationmanager perche ritorna qualsiasi object manager e io gli dico as location
     private val manager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
 
@@ -24,7 +24,7 @@ class LocationHelper (private val context: Context, private val onLocationChange
         val isGPSEnabled = manager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
         val isNetworkEnabled = manager?.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ?: false
 
-        //controlla se sono stati concessi i permessi per accedere alla posizione precisa e approssimativa
+        //controlla se sono stati concessi i permessi per accedere alla posizione precisa e approssimativa il risultato è booleano
         val isFineGranted = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val isCoarseGranted = ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 

@@ -23,14 +23,14 @@ data class Hotel(
 
 fun RemoteHotel.toModel(): Hotel {
     return Hotel(
-        indirizzo = this.formattedAddress, // Mappa formattedAddress a indirizzo
-        classificazione = this.rating,      // Mappa rating a classificazione (entrambi Double?)
-        denominazione = this.name,          // Mappa name a denominazione
-        foto = this.photos,                 // Mappa photos a foto (entrambi List<Photo>?)
-        posizione = this.geometry,          // Mappa geometry a posizione (entrambi Geometry)
-        icon = this.icon,                   // Mappa icon
-        iconBackgroundColor = this.iconBackgroundColor, // Mappa iconBackgroundColor
-        iconMaskBaseUri = this.iconMaskBaseUri, // Mappa iconMaskBaseUri
+        indirizzo = this.formattedAddress,
+        classificazione = this.rating,
+        denominazione = this.name,
+        foto = this.photos,
+        posizione = this.geometry,
+        icon = this.icon,
+        iconBackgroundColor = this.iconBackgroundColor,
+        iconMaskBaseUri = this.iconMaskBaseUri,
         placeId = this.placeId,
     )
 }

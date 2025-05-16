@@ -56,7 +56,6 @@ class MapViewModel @Inject constructor(
 
     //qui inizializzo il locationhelper
     private val locationHelper = LocationHelper(context = context) { location ->
-
         //recupero la mia posizione
         val markerState = MarkerState(
             position = LatLng(location.latitude, location.longitude)
@@ -71,7 +70,7 @@ class MapViewModel @Inject constructor(
         )
 
         //qui filtro gli hotel cioe li faccio mostrare solo se sono ad una certa distanza da me
-        val filteredHotels = uiState.hotel.filter {
+       val filteredHotels = uiState.hotel.filter {
             val hotelLocation = android.location.Location("hotel")
                 .apply {
                     latitude = it.posizione.location.lat

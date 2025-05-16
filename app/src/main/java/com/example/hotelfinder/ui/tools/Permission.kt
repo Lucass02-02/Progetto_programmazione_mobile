@@ -22,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlin.system.exitProcess
 
 //sealed class in modo da poterla usare in modo più generale possibile
 sealed class Permission(
@@ -70,11 +71,11 @@ fun PermissionChecker(
         if(permissionState.shouldShowRationale){// se non ho mai chiesto perche servono i permessi dagli il dialog
             PermissionDialog( // qui è come si comporta quando l utente fa una di queste azioni
                 permission = permission,
-                onDismiss = { },
+                onDismiss = { exitProcess(0) },
                 onRequest = {permissionState.launchMultiplePermissionRequest()}
             )
         } else {
-            SideEffect { // se non serve il dialog chiedo solo i permessi
+            SideEffect { // se non serve il dialog chiedo solo i permessi, si usa sideeffect cosi sa che deve andare in esecuzione non dentro un composable
                 permissionState.launchMultiplePermissionRequest()
             }
         }

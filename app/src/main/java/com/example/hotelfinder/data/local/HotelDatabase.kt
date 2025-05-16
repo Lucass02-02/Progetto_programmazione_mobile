@@ -10,7 +10,7 @@ import com.example.hotelfinder.data.local.entity.LocalHotel
 
 @Database(entities = [LocalHotel::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class HotelDatabase: RoomDatabase() {
+abstract class HotelDatabase: RoomDatabase() { // è astratta perche ha un metodo astratto che ritorna un database
     // funzione che restituisce un istanza di HotelDao
     abstract fun getHotelDao(): HotelDao
 

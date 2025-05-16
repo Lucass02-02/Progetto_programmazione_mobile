@@ -17,14 +17,14 @@ interface HotelDao {
     @Upsert
     suspend fun insert(hotel: List<LocalHotel>)
 
-    @Query("SELECT * FROM hotels ORDER BY classificazione, denominazione ASC")
-    fun getAll(): Flow<List<LocalHotel>>
+    @Query("SELECT * FROM hotels GROUP BY  denominazione ")
+    fun getAll(): Flow<List<LocalHotel>>  //la get non va in suspend perche ritorna un flow
 
     @Query("DELETE FROM hotels")
     suspend fun deleteAll()
 
 
-    /*@Query("SELECT * FROM hotels WHERE placeId LIKE '%' || :placeId || '%' AND indirizzo LIKE '%' || :indirizzo || '%'  AND denominazione LIKE '%' || :nome || '%'")*/
-    @Query("SELECT * FROM hotels WHERE placeId = :placeId AND indirizzo = :indirizzo AND denominazione = :nome ORDER BY indirizzo, denominazione ASC")
+
+    @Query("SELECT * FROM hotels WHERE placeId = :placeId AND indirizzo = :indirizzo AND denominazione = :nome GROUP BY  denominazione ")
     fun getHotelByAddress(placeId: String,indirizzo: String, nome: String): Flow<List<LocalHotel>>
 }

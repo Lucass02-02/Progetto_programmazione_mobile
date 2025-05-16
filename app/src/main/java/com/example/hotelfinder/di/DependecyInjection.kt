@@ -59,60 +59,20 @@ object RetrofitModule {
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule { // Mantiene 'abstract class'
 
-    /* @Binds si usa per le classi astratte */
 
-
-    /* è una funzione che lega HotelRemoteRepository e HotelRetrofitRepository perchè HotelRetrofitRepository è
-    un istanziazione dell interfaccia HotelRemoteRepository e quindi quando creo un oggetto HotelRemoteRepository
-    sa che deve istanziare
-     */
     @Binds
     @Singleton
     abstract fun bindRemoteRepository(
-        repository: HotelRetrofitRepository // Assicurati che HotelRetrofitRepository abbia @Inject constructor
+        repository: HotelRetrofitRepository
     ): HotelRemoteRepository
 
-    // Questo @Binds è commentato - lascialo così a meno che tu non crei
-    // una classe concreta (es. HotelRoomRepository) per il db locale.
 
-    /* è il dependecyinjection che in automatico rende HotelRoomRepository un istanziazione
-    dell interfaccia HotelLocalRepository
-     */
     @Binds
     @Singleton
     abstract fun bindLocalRepository(repository: HotelRoomRepository): HotelLocalRepository
 
 
-    // --- Metodi @Provides ---
-    // Questi vanno nel companion object
 
-    /*
-    companion object {
-
-        @Provides
-        @Singleton
-        fun provideLocalRepository(database: HotelDatabase): HotelLocalRepository {
-            // IMPORTANTE: Fornisci HotelLocalRepository solo UNA volta.
-            // Se usi questo @Provides, assicurati che il @Binds bindLocalRepository sopra sia commentato.
-            // Questa è l'implementazione MOCK (in memoria):
-
-            return HotelRoomRepository(database.getHotelDao())
-
-
-            /*return object : HotelLocalRepository {
-                private val hotels = mutableListOf<Hotel>()
-                override suspend fun insert(hotel: Hotel) { hotels.add(hotel) }
-                override suspend fun insert(hotels: List<Hotel>) { this.hotels.addAll(hotels) }
-                override fun getAll(): Flow<List<Hotel>> { return flow { emit(hotels) } }
-                override suspend fun clearAll() { hotels.clear() }
-                override fun getHotelByAddress(indirizzo: String, nome: String): Flow<List<Hotel>> {
-                    TODO("Not yet implemented")
-                }
-            } */
-        }
-
-        // Altri metodi @Provides per questo modulo andrebbero qui...
-    }*/
 }
 
 
@@ -141,7 +101,7 @@ object DatabaseModule {
             HotelDatabase::class.java,
             "hotel_db"
         )
-            .addMigrations(MIGRATION_1_2) // ✅ ORA è visibile
+            .addMigrations(MIGRATION_1_2)
             .build()
 
     }
@@ -151,5 +111,5 @@ object DatabaseModule {
     // la funzione ha in ingresso un ogetto HotelDatabase e usa la funzione getHotelDao per ottenere un HotelDao
     @Provides
     @Singleton
-    fun hotelDao(database: HotelDatabase) = database.getHotelDao() // Giusto: fornisce HotelDao
+    fun hotelDao(database: HotelDatabase) = database.getHotelDao()
 }
